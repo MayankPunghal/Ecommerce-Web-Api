@@ -14,7 +14,7 @@ namespace EcomApi.BusinessEntities.ResponseProxies
         public DateTime requestTime { get; set; }
         public DateTime responseTime { get; set; }
 
-        public List<Products> ProductsList { get; set; }
+        public List<Products> ProductList { get; set; }
     }
     public class GetCategoryResponseProxy
     {
@@ -83,6 +83,18 @@ namespace EcomApi.BusinessEntities.ResponseProxies
     public class UpdateCategoryResponseProxy
     {
         public UpdateCategoryResponseProxy()
+        {
+            status = 0;
+            requestTime = DateTime.UtcNow;
+        }
+        public int status { get; set; }
+        public string message { get; set; }
+        public DateTime requestTime { get; set; }
+        public DateTime responseTime { get; set; }
+    }
+    public class UpdateProductResponseProxy
+    {
+        public UpdateProductResponseProxy()
         {
             status = 0;
             requestTime = DateTime.UtcNow;
