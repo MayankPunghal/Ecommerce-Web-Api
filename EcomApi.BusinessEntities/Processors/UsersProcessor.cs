@@ -76,7 +76,7 @@ namespace EcomApi.BusinessEntities.Processors
                 {
                     Users user = new Users();
                     user.UserName = req.UserName;
-                    user.IsAdmin = false;
+                    user.RoleId = req.RoleId;
                     user.Email = req.UserEmail;
                     user.IsLocked = false;
                     user.FirstName = req.FirstName;

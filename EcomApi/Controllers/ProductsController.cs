@@ -2,6 +2,7 @@
 using EcomApi.BusinessEntities.RequestProxies;
 using EcomApi.Helpers;
 using EcomApi.Utils.Common;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace EcomApi.Controllers
@@ -53,6 +54,8 @@ namespace EcomApi.Controllers
             var data = productPro.SetCategory(requestproxy);
             return Ok(data);
         }
+        //[Authorize(Roles = "Admin")]
+        [Authorize(Policy = "RequireAdministratorRole")]
         [Route(ApiRoute.products.deletecategory)]
         [HttpPost]
         public IActionResult DeleteCategory([FromBody] DeleteCategoryRequestProxy requestproxy)

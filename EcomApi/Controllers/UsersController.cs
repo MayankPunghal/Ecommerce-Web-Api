@@ -17,10 +17,13 @@ namespace EcomApi.Controllers
             var userPro = new UsersProcessor();
             var data = userPro.LoginByUserName(requestproxy);
             if (data.status == 0)
-                return Ok(data);
+                return Unauthorized(data);
             else if (data.status == -1)
-                return Ok(data);
+                return Unauthorized(data);
+            var token = new GeneralController().GenerateJwtToken(data.user.UserName, data.user.RoleName);
+            data.token = token;
             return Ok(data);
+            //return Ok(data);
         }
         [Route(ApiRoute.users.loginbyemail)]
         [HttpPost]
@@ -31,9 +34,11 @@ namespace EcomApi.Controllers
             var data = userPro.LoginByEmail(requestproxy);
             if (data.status == 0)
                 return Unauthorized(data);
-            else if(data.status == -1)
-                return BadRequest(data);
-            return Ok(data);
+            else if (data.status == -1)
+                return Unauthorized(data);
+            var token = new GeneralController().GenerateJwtToken(data.user.UserName, data.user.RoleName);
+            return Ok(new { data, token });
+            //return Ok(data);
         }
         [Route(ApiRoute.users.getusers)]
         [HttpPost]

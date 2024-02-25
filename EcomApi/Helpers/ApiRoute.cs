@@ -9,6 +9,7 @@
         {
             const string Route = Base + "/general/";
             internal const string checkhealth = Route + "checkhealth";
+            internal const string generatetoken = Route + "generatetoken";
         }
         internal static class users
         {
