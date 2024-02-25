@@ -1,0 +1,17 @@
+{
+  "version": 2,
+  "dgSpecHash": "dlZ0R/F7tfdZ2MA/STZRjd+C6rVL4eym9RnZFo/Tb8Z8Soidq9KvekSc9BqpBx/gtHVW4GUms52uexFMfwqx/Q==",
+  "success": true,
+  "projectFilePath": "D:\\Ecommerce\\WebApi\\EcomApi.Utils\\EcomApi.Utils.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\Mayank.Punghal\\.nuget\\packages\\bcrypt.net-core\\1.6.0\\bcrypt.net-core.1.6.0.nupkg.sha512",
+    "C:\\Users\\Mayank.Punghal\\.nuget\\packages\\microsoft.extensions.apidescription.server\\6.0.5\\microsoft.extensions.apidescription.server.6.0.5.nupkg.sha512",
+    "C:\\Users\\Mayank.Punghal\\.nuget\\packages\\microsoft.openapi\\1.2.3\\microsoft.openapi.1.2.3.nupkg.sha512",
+    "C:\\Users\\Mayank.Punghal\\.nuget\\packages\\nlog\\5.2.8\\nlog.5.2.8.nupkg.sha512",
+    "C:\\Users\\Mayank.Punghal\\.nuget\\packages\\swashbuckle.aspnetcore\\6.4.0\\swashbuckle.aspnetcore.6.4.0.nupkg.sha512",
+    "C:\\Users\\Mayank.Punghal\\.nuget\\packages\\swashbuckle.aspnetcore.swagger\\6.4.0\\swashbuckle.aspnetcore.swagger.6.4.0.nupkg.sha512",
+    "C:\\Users\\Mayank.Punghal\\.nuget\\packages\\swashbuckle.aspnetcore.swaggergen\\6.4.0\\swashbuckle.aspnetcore.swaggergen.6.4.0.nupkg.sha512",
+    "C:\\Users\\Mayank.Punghal\\.nuget\\packages\\swashbuckle.aspnetcore.swaggerui\\6.4.0\\swashbuckle.aspnetcore.swaggerui.6.4.0.nupkg.sha512"
+  ],
+  "logs": []
+}

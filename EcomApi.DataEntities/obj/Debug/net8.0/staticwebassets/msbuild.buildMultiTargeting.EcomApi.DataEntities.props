@@ -1,0 +1,3 @@
+﻿<Project>
+  <Import Project="..\build\EcomApi.DataEntities.props" />
+</Project>

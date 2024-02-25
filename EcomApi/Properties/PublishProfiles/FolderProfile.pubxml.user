@@ -1,0 +1,11 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<!--
+https://go.microsoft.com/fwlink/?LinkID=208121.
+-->
+<Project>
+  <PropertyGroup>
+    <_PublishTargetUrl>D:\Learning\Published\EcomWebApi</_PublishTargetUrl>
+    <History>True|2024-02-18T10:12:01.0979387Z;True|2024-02-18T15:39:07.3249936+05:30;True|2024-02-18T15:26:42.3878211+05:30;False|2024-02-18T15:25:45.1925606+05:30;False|2024-02-18T15:25:24.7713989+05:30;False|2024-02-18T15:24:59.3627582+05:30;False|2024-02-18T15:24:40.5586531+05:30;True|2024-02-18T15:22:05.6474240+05:30;False|2024-02-18T15:20:26.8507333+05:30;</History>
+    <LastFailureDetails />
+  </PropertyGroup>
+</Project>
