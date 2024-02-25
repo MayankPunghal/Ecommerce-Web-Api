@@ -1,6 +1,7 @@
 ﻿using EcomApi.BusinessEntities.ResponseProxies;
 using EcomApi.DataEntities;
 using EcomApi.DataEntities.Models;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 
 namespace EcomApi.BusinessEntities.Readers
@@ -11,7 +12,7 @@ namespace EcomApi.BusinessEntities.Readers
         public List<Users> GetUsersList()
         {
             List<Users> users = new List<Users>();
-            users = (from u in Context.Users
+            users = (from u in Context.Users.AsNoTracking()
                      select u).ToList();
             return users;
 

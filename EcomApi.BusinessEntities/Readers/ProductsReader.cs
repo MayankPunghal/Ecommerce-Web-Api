@@ -1,6 +1,7 @@
 ﻿using EcomApi.BusinessEntities.ResponseProxies;
 using EcomApi.DataEntities;
 using EcomApi.DataEntities.Models;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 
 namespace EcomApi.BusinessEntities.Readers
@@ -11,7 +12,7 @@ namespace EcomApi.BusinessEntities.Readers
         public List<Products> GetProductsList()
         {
             List<Products> users = new List<Products>();
-            users = (from p in Context.Products
+            users = (from p in Context.Products.AsNoTracking()
                      select p).ToList();
             return users;
 
@@ -19,7 +20,7 @@ namespace EcomApi.BusinessEntities.Readers
         public List<Categories> GetCategoriesList()
         {
             List<Categories> category = new List<Categories>();
-            category = (from c in Context.Categories
+            category = (from c in Context.Categories.AsNoTracking()
                         select c).ToList();
             return category;
         }
@@ -32,10 +33,10 @@ namespace EcomApi.BusinessEntities.Readers
             return users;
 
         }
-        public bool CheckIfProductExist(string ProductName)
+        public bool CheckIfProductExistByName(string ProductName)
         {
             bool check = false;
-            check = (from p in Context.Products
+            check = (from p in Context.Products.AsNoTracking()
                      where p.ProductName == ProductName
                      select true).FirstOrDefault();
             return check;
@@ -43,16 +44,40 @@ namespace EcomApi.BusinessEntities.Readers
         public bool CheckIfCategoryExistByName(string CategoryName)
         {
             bool check = false;
-            check = (from p in Context.Categories
-                     where p.CategoryName == CategoryName
+            check = (from c in Context.Categories
+                     where c.CategoryName == CategoryName
                      select true).FirstOrDefault();
             return check;
         }
         public bool CheckIfCategoryExistById(int CategoryId)
         {
             bool check = false;
-            check = (from p in Context.Categories
-                     where p.CategoryId == CategoryId
+            check = (from c in Context.Categories
+                     where c.CategoryId == CategoryId
+                     select true).FirstOrDefault();
+            return check;
+        }
+        public bool CheckIfProductNameIsChanged(string ProductName, int ProductId)
+        {
+            bool check = false;
+            check = (from p in Context.Products
+                     where p.ProductID == ProductId
+                     select p.ProductName != ProductName).FirstOrDefault();
+            return check;
+        }
+        public bool CheckIfCategoryNameIsChanged(string CategoryName, int CategoryId)
+        {
+            bool check = false;
+            check = (from c in Context.Categories
+                     where c.CategoryId == CategoryId
+                     select c.CategoryName != CategoryName).FirstOrDefault();
+            return check;
+        }
+        public bool CheckIfProductExistById(int ProductId)
+        {
+            bool check = false;
+            check = (from p in Context.Products
+                     where p.ProductID == ProductId
                      select true).FirstOrDefault();
             return check;
         }

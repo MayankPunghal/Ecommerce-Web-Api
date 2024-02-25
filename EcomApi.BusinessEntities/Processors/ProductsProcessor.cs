@@ -26,7 +26,7 @@ namespace EcomApi.BusinessEntities.Processors
             GetProductResponseProxy response = new GetProductResponseProxy();
             try
             {
-                response.ProductsList = reader.GetProductsList();
+                response.ProductList = reader.GetProductsList();
 
                 response.status = 1;
                 response.message = "Product List Got Successfully";
@@ -93,7 +93,7 @@ namespace EcomApi.BusinessEntities.Processors
             try
             {
                 //check if user already exist based on UserName and Email
-                if (!reader.CheckIfProductExist(req.ProductName))
+                if (!reader.CheckIfProductExistByName(req.ProductName))
                 {
                     Products product = new Products();
                     product.ProductName = req.ProductName;
@@ -101,7 +101,7 @@ namespace EcomApi.BusinessEntities.Processors
                     product.Description = req.Description;
                     product.IsActive = true;
                     product.ImageName = req.ImageName;
-                    product.StockQuantity= req.StockQuantity;
+                    product.StockQuantity = req.StockQuantity;
                     product.CategoryId = req.CategoryId;
 
                     writer.SetProduct(product);
@@ -126,7 +126,7 @@ namespace EcomApi.BusinessEntities.Processors
             }
             return response;
         }
-        
+
         public SetCategoryResponseProxy SetCategory(SetCategoryRequestProxy req)
         {
             Log.Info($"SetCategory Method call started @{DateTime.UtcNow:O}");
@@ -197,8 +197,23 @@ namespace EcomApi.BusinessEntities.Processors
             UpdateCategoryResponseProxy response = new UpdateCategoryResponseProxy();
             try
             {
-                //check if user already exist based on UserName and Email
-                if (!reader.CheckIfCategoryExistByName(req.CategoryName))
+                if (reader.CheckIfProductNameIsChanged(req.CategoryName, req.CategoryId))
+                    if (!reader.CheckIfProductExistByName(req.CategoryName))
+                    {
+                        Categories category = new Categories();
+                        category.CategoryId = req.CategoryId;
+                        category.CategoryName = req.CategoryName;
+                        category.CategoryDescription = req.CategoryDescription;
+                        writer.UpdateCategory(category);
+                        response.status = 1;
+                        response.message = $"Category Got Successfully Updated with Category Name : {req.CategoryName}";
+                    }
+                    else
+                    {
+                        response.status = 0;
+                        response.message = $"Category with name {req.CategoryName} already exists !";
+                    }
+                else
                 {
                     Categories category = new Categories();
                     category.CategoryId = req.CategoryId;
@@ -208,11 +223,6 @@ namespace EcomApi.BusinessEntities.Processors
                     response.status = 1;
                     response.message = $"Category Got Successfully Updated with Category Name : {req.CategoryName}";
                 }
-                else
-                {
-                    response.status = 0;
-                    response.message = $"Category with name {req.CategoryName} already exists !";
-                }
             }
             catch (Exception ex)
             {
@@ -221,6 +231,91 @@ namespace EcomApi.BusinessEntities.Processors
             finally
             {
                 Log.Info($"UpdateCategory Method call ended @{DateTime.UtcNow:O}");
+                response.responseTime = DateTime.UtcNow;
+            }
+            return response;
+        }
+        public UpdateProductResponseProxy UpdateProduct(UpdateProductRequestProxy req)
+        {
+            Log.Info($"UpdateProduct Method call started @{DateTime.UtcNow:O}");
+            UpdateProductResponseProxy response = new UpdateProductResponseProxy();
+            try
+            {
+                if (reader.CheckIfProductNameIsChanged(req.ProductName, req.ProductID))
+                    if (!reader.CheckIfProductExistByName(req.ProductName))
+                    {
+                        Products product = new Products();
+                        product.ProductID = req.ProductID;
+                        product.ProductName = req.ProductName;
+                        product.Description = req.Description;
+                        product.Price = req.Price;
+                        product.CategoryId = req.CategoryId;
+                        product.StockQuantity = req.StockQuantity;
+                        product.ImageName = req.ImageName;
+                        product.IsActive = req.IsActive;
+                        writer.UpdateProduct(product);
+                        response.status = 1;
+                        response.message = $"Category Got Successfully Updated with Product Name : {req.ProductName}";
+                    }
+                    else
+                    {
+                        response.status = 0;
+                        response.message = $"Product with name {req.ProductName} already exists !";
+                    }
+                else
+                {
+                    Products product = new Products();
+                    product.ProductID = req.ProductID;
+                    product.ProductName = req.ProductName;
+                    product.Description = req.Description;
+                    product.Price = req.Price;
+                    product.CategoryId = req.CategoryId;
+                    product.StockQuantity = req.StockQuantity;
+                    product.ImageName = req.ImageName;
+                    product.IsActive = req.IsActive;
+                    writer.UpdateProduct(product);
+                    response.status = 1;
+                    response.message = $"Category Got Successfully Updated with Product Name : {req.ProductName}";
+                }
+            }
+            catch (Exception ex)
+            {
+                Log.Error($"Error in UpdateProduct : {ex}");
+            }
+            finally
+            {
+                Log.Info($"UpdateProduct Method call ended @{DateTime.UtcNow:O}");
+                response.responseTime = DateTime.UtcNow;
+            }
+            return response;
+        }
+
+        public DeleteCategoryResponseProxy DeleteProduct(DeletProductRequestProxy req)
+        {
+            Log.Info($"DeleteProduct Method call started @{DateTime.UtcNow:O}");
+            DeleteCategoryResponseProxy response = new DeleteCategoryResponseProxy();
+            try
+            {
+                //check if user already exist based on UserName and Email
+                if (reader.CheckIfProductExistById(req.ProductId))
+                {
+                    writer.DeleteProduct(req.ProductId);
+                    response.status = 1;
+                    response.message = $"Product Got Successfully Deleted for Product Id : {req.ProductId}";
+                }
+                else
+                {
+                    response.status = 0;
+                    response.message = $"Product with Id : {req.ProductId} does not exist";
+                }
+            }
+            catch (Exception ex)
+            {
+                Log.Error($"Error in DeleteProduct : {ex}");
+            }
+            finally
+            {
+                Log.Info($"DeleteProduct Method call ended @{DateTime.UtcNow:O}");
                 response.responseTime = DateTime.UtcNow;
             }
             return response;

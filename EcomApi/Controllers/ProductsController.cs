@@ -66,9 +66,27 @@ namespace EcomApi.Controllers
         [HttpPost]
         public IActionResult UpdateCategory([FromBody] UpdateCategoryRequestProxy requestproxy)
         {
-            Log.Info($"Deleting category data for Category Id : {requestproxy.CategoryId}");
+            Log.Info($"Updating category data for Category Id : {requestproxy.CategoryId}");
             var productPro = new ProductsProcessor();
             var data = productPro.UpdateCategory(requestproxy);
+            return Ok(data);
+        }
+        [Route(ApiRoute.products.updateproduct)]
+        [HttpPost]
+        public IActionResult UpdateProduct([FromBody] UpdateProductRequestProxy requestproxy)
+        {
+            Log.Info($"Updating Product data for Product Id : {requestproxy.ProductID}");
+            var productPro = new ProductsProcessor();
+            var data = productPro.UpdateProduct(requestproxy);
+            return Ok(data);
+        }
+        [Route(ApiRoute.products.deleteproduct)]
+        [HttpPost]
+        public IActionResult DeleteProduct([FromBody] DeletProductRequestProxy requestproxy)
+        {
+            Log.Info($"Deleting Product data for ProductId Id : {requestproxy.ProductId}");
+            var productPro = new ProductsProcessor();
+            var data = productPro.DeleteProduct(requestproxy);
             return Ok(data);
         }
     }
