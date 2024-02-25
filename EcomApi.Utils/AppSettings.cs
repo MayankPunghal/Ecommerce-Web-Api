@@ -18,6 +18,7 @@ namespace EcomApi.Utils
         public class Setting
         {
             public Sqlconnection? SqlConnection { get; init; }
+            public Jwt? Jwt { get; init; }
         }
         public class Sqlconnection
         {
@@ -27,6 +28,14 @@ namespace EcomApi.Utils
         {
             public string? ConnectionString { get; init; }
             public int CommandTimeout { get; init; }
+        }
+        public class Jwt
+        {
+            public string SecretKey { get; init; }
+            public string? Issuer { get; init; }
+            public string? Audience { get; init; }
+            public int ExpirationMinutes { get; init; }
+            public bool IsAuthenticationOn { get; set; }
         }
     }
 }

@@ -53,6 +53,7 @@ namespace EcomApi.BusinessEntities.ResponseProxies
         public string message { get; set; }
         public DateTime requestTime { get; set; }
         public DateTime responseTime { get; set; }
+        public string? token { get; set; }
         public UserWithoutPassword user { get; set; }
     }
     public class UserWithoutPassword
@@ -60,7 +61,8 @@ namespace EcomApi.BusinessEntities.ResponseProxies
         public int UserId { get; set; }
         public string UserName { get; set; }
         public string UserEmail { get; set; }
-        public bool IsAdmin { get; set; }
+        public int? RoleId { get; set; }
+        public string RoleName { get; set; }
         public bool? IsLocked { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
