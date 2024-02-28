@@ -19,6 +19,7 @@ namespace EcomApi.Utils
         {
             public Sqlconnection? SqlConnection { get; init; }
             public Jwt? Jwt { get; init; }
+            public MailSettings MailSettings { get; init; } 
         }
         public class Sqlconnection
         {
@@ -36,6 +37,27 @@ namespace EcomApi.Utils
             public string? Audience { get; init; }
             public int ExpirationMinutes { get; init; }
             public bool IsAuthenticationOn { get; set; }
+        }
+
+        public class MailSettings
+        {
+            public Smtp Smtp { get; init; }
+        }
+        public class Smtp
+        {
+            public string From { get; init; }
+            public string DeliveryMethod { get; init; }
+            public Network Network { get; init; }
+        }
+        public class Network
+        {
+            public string Name { get; init; }
+            public bool DefaultCredentials { get; set; }
+            public string Host { get; init; }
+            public int Port { get; init; }
+            public bool EnableSsl { get; init; }
+            public string UserName { get; init; }
+            public string Password { get; init; }
         }
     }
 }
