@@ -48,6 +48,13 @@
         {
             const string Route = Base + "/wishlist/";
         }
+        internal static class image
+        {
+            const string Route = Base + "/image/";
+            internal const string upload = Route + "upload";
+            internal const string download = Route + "download";
+        }
+
     }
 }
 

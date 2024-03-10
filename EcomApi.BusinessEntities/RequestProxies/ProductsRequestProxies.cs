@@ -1,4 +1,6 @@
-﻿namespace EcomApi.BusinessEntities.RequestProxies
+﻿using System.ComponentModel.DataAnnotations.Schema;
+
+namespace EcomApi.BusinessEntities.RequestProxies
 {
     public class UserData
     {
@@ -27,6 +29,9 @@
         public int StockQuantity { get; set; }
         public string? ImageName { get; set; }
         public int? CategoryId { get; set; }
+
+        [NotMapped]
+        public IFormFile ImageFile { get; set; }
     }
     public class SetCategoryRequestProxy
     {

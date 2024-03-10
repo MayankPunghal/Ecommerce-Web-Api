@@ -103,6 +103,7 @@ namespace EcomApi.BusinessEntities.Processors
                     product.ImageName = req.ImageName;
                     product.StockQuantity = req.StockQuantity;
                     product.CategoryId = req.CategoryId;
+                    product.ImageName = req.ImageName;
 
                     writer.SetProduct(product);
 

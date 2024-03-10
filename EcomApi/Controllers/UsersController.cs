@@ -88,9 +88,10 @@ namespace EcomApi.Controllers
         }
         [Route(ApiRoute.users.registeruser)]
         [HttpPost]
-        public IActionResult RegisterUser([FromBody] SetUserRequestProxy requestproxy)
+        public async Task<IActionResult> RegisterUser([FromForm] SetUserRequestProxy requestproxy)
         {
             Log.Info($"Creating user data for User Name : {requestproxy.UserName}");
+            requestproxy.ImageName = await ImageUtil.SaveImage(requestproxy.ImageFile);
             var userPro = new UsersProcessor();
             var data = userPro.RegisterUser(requestproxy);
             return Ok(data);
