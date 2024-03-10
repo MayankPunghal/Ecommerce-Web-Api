@@ -47,6 +47,7 @@ namespace EcomApi.BusinessEntities.Readers
                 IsLocked = user.IsLocked,
                 RoleId = user.RoleId,
                 LastLogin = LastLogin,
+                ImageName = user.ImageName,
                 RoleName = GetRoleNameByUserName(user.UserName)
             };
         }

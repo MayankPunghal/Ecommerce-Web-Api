@@ -38,9 +38,10 @@ namespace EcomApi.Controllers
         }
         [Route(ApiRoute.products.setproduct)]
         [HttpPost]
-        public IActionResult SetPoduct([FromBody] SetProductRequestProxy requestproxy)
+        public async Task<IActionResult> SetPoduct([FromForm] SetProductRequestProxy requestproxy)
         {
             Log.Info($"Creating product data for Product Name : {requestproxy.ProductName}");
+            requestproxy.ImageName = await ImageUtil.SaveImage(requestproxy.ImageFile);
             var productPro = new ProductsProcessor();
             var data = productPro.SetProduct(requestproxy);
             return Ok(data);

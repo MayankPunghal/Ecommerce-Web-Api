@@ -81,6 +81,7 @@ namespace EcomApi.BusinessEntities.Processors
                     user.IsLocked = false;
                     user.FirstName = req.FirstName;
                     user.LastName = req.LastName;
+                    user.ImageName = req.ImageName;
                     user.PasswordHash = PasswordUtils.HashPassword(req.Password);
 
                     writer.SetUser(user);

@@ -2,6 +2,7 @@ using EcomApi.DataEntities.Models.TokenValidation;
 using Microsoft.OpenApi.Models;
 using EcomApi.Utils;
 using EcomApi.Services;
+using Microsoft.Extensions.FileProviders;
 
 
 var builder = WebApplication.CreateBuilder(args);
@@ -74,6 +75,16 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+var apiProjectDirectory = Directory.GetParent(builder.Environment.ContentRootPath).ToString();
+var sharedFolderPath = Path.Combine(apiProjectDirectory, "Images");
+
+
+// Serve static files from the shared folder
+app.UseStaticFiles(new StaticFileOptions
+{
+    FileProvider = new PhysicalFileProvider(sharedFolderPath),
+    RequestPath = "/Images"
+});
 
 app.UseMiddleware<RequestLoggingMiddleware>();
 if(AppSettings.Settings.Jwt.IsAuthenticationOn)

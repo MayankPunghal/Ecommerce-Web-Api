@@ -15,6 +15,8 @@ namespace EcomApi.DataEntities.Models
         public string? ImageName { get; set; }
         public bool IsActive { get; set; }
         public int? CategoryId { get; set; }
+        [NotMapped]
+        public string? ImageSrc { get; set; }
 
     }
 

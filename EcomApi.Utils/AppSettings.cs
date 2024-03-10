@@ -18,12 +18,17 @@ namespace EcomApi.Utils
         public class Setting
         {
             public Sqlconnection? SqlConnection { get; init; }
+            public CommonSettings CommonSettings { get; set; }
             public Jwt? Jwt { get; init; }
             public MailSettings MailSettings { get; init; } 
         }
         public class Sqlconnection
         {
             public EcomDB? EcomDB { get; init; }
+        }
+        public class CommonSettings
+        {
+            public string SharedFolderPath { get; set; }
         }
         public class EcomDB
         {
