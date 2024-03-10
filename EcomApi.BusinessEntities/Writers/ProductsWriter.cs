@@ -24,9 +24,18 @@ namespace EcomApi.BusinessEntities.Writers
             Context.Categories.UpdateRange(c);
             Context.SaveChanges();
         }
+        public void UpdateProduct(Products p)
+        {
+            Context.Products.UpdateRange(p);
+            Context.SaveChanges();
+        }
         public void DeleteCategory(int CategoryId)
         {
             Context.Categories.Where(a => a.CategoryId == CategoryId).ExecuteDelete();
+        }
+        public void DeleteProduct(int ProductId)
+        {
+            Context.Products.Where(a => a.ProductID == ProductId).ExecuteDelete();
         }
     }
 }

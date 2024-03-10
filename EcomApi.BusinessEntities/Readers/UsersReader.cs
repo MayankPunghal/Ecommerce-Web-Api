@@ -1,6 +1,7 @@
 ﻿using EcomApi.BusinessEntities.ResponseProxies;
 using EcomApi.DataEntities;
 using EcomApi.DataEntities.Models;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 
 namespace EcomApi.BusinessEntities.Readers
@@ -11,7 +12,7 @@ namespace EcomApi.BusinessEntities.Readers
         public List<Users> GetUsersList()
         {
             List<Users> users = new List<Users>();
-            users = (from u in Context.Users
+            users = (from u in Context.Users.AsNoTracking()
                      select u).ToList();
             return users;
 
@@ -35,6 +36,7 @@ namespace EcomApi.BusinessEntities.Readers
         }
         public UserWithoutPassword MapUserToUserWithoutPassword(Users user)
         {
+            var LastLogin = Context.UserLoginAttempts.FirstOrDefault(a => a.UserID == user.UserID).AttemptDateTime;
             return new UserWithoutPassword
             {
                 UserId = user.UserID,
@@ -43,9 +45,9 @@ namespace EcomApi.BusinessEntities.Readers
                 FirstName = user.FirstName,
                 LastName = user.LastName,
                 IsLocked = user.IsLocked,
-                IsAdmin = user.IsAdmin
-
-
+                RoleId = user.RoleId,
+                LastLogin = LastLogin,
+                RoleName = GetRoleNameByUserName(user.UserName)
             };
         }
         public Users GetUserByUserName(string UserName)
@@ -67,6 +69,14 @@ namespace EcomApi.BusinessEntities.Readers
                 return null;
             }
             return user;
+        }
+
+        public string GetRoleNameByUserName(string UserName)
+        {
+            string roleName = "";
+            var roleId = Context.Users.FirstOrDefault(x => x.UserName == UserName).RoleId;
+            roleName = Context.Roles.FirstOrDefault(x => x.RoleId == roleId).RoleName;
+            return roleName;
         }
 
     }

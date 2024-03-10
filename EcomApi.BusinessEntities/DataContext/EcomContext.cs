@@ -43,6 +43,7 @@ namespace EcomApi.BusinessEntities
             builder.Entity<DeliveryUpdates>().ToTable(tb => tb.HasTrigger("tr_DeliveryUpdates"));
             builder.Entity<ComplaintResolutionStatus>().ToTable(tb => tb.HasTrigger("tr_ComplaintResolutionStatus"));
             builder.Entity<UserLoginAttempts>().ToTable(tb => tb.HasTrigger("tr_UserLoginAttempts"));
+            builder.Entity<Roles>().ToTable(tb => tb.HasTrigger("tr_Roles"));
 
 
             builder.Entity<Users>().ToTable(tb => tb.HasTrigger("tr_Users_delete"));
@@ -59,6 +60,7 @@ namespace EcomApi.BusinessEntities
             builder.Entity<DeliveryUpdates>().ToTable(tb => tb.HasTrigger("tr_DeliveryUpdates_delete"));
             builder.Entity<ComplaintResolutionStatus>().ToTable(tb => tb.HasTrigger("tr_ComplaintResolutionStatus_delete"));
             builder.Entity<UserLoginAttempts>().ToTable(tb => tb.HasTrigger("tr_UserLoginAttempts_delete"));
+            builder.Entity<Roles>().ToTable(tb => tb.HasTrigger("tr_Roles_delete"));
 
 
             // Add other entities here
@@ -82,6 +84,7 @@ namespace EcomApi.BusinessEntities
         public DbSet<ComplaintResolutionDashboardViewModel> ComplaintResolutionDashboard { get; set; }
         public DbSet<UserLoginAttempts> UserLoginAttempts { get; set; }
         public DbSet<Categories> Categories { get; set; }
+        public DbSet<Roles> Roles { get; set; }
 
     }
 }

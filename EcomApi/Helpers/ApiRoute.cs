@@ -9,6 +9,7 @@
         {
             const string Route = Base + "/general/";
             internal const string checkhealth = Route + "checkhealth";
+            internal const string generatetoken = Route + "generatetoken";
         }
         internal static class users
         {
@@ -30,6 +31,8 @@
             internal const string getproducts = Route + "getproducts";
             internal const string getproductbyid = Route + "getproductbyid";
             internal const string setproduct = Route + "setproduct";
+            internal const string updateproduct = Route + "updateproduct";
+            internal const string deleteproduct = Route + "deleteproduct";
 
             //product categories
             internal const string getcategories = Route + "getcategories";
