@@ -25,22 +25,23 @@ namespace EcomApi.Controllers
         }
         [HttpPost]
         [Route(ApiRoute.general.generatetoken)]
-        public IActionResult GenerateToken(string username, string role)
+        public IActionResult GenerateToken(string username, string role, string audience)
         {
-            var token = GenerateJwtToken(username, role);
+            if (!AppSettings.Settings.Jwt.Audience.Contains(audience) || string.IsNullOrEmpty(audience))
+                return Unauthorized();
+            var token = GenerateJwtToken(username, role, audience);
             if(token != null && token.Length > 0)
                 return Ok(token);
             return BadRequest("Token Could Not Be Generated");
             //return Ok(GenerateJwtToken(username));
         }
 
-        public string GenerateJwtToken(string username, string role)
+        public string GenerateJwtToken(string username, string role, string audience)
         {
             try
             {
                 var secretKey = AppSettings.Settings.Jwt.SecretKey;
                 var issuer = AppSettings.Settings.Jwt.Issuer;
-                var audience = AppSettings.Settings.Jwt.Audience;
                 var expirationMinutes = Convert.ToInt32(AppSettings.Settings.Jwt.ExpirationMinutes);
 
                 var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(secretKey));

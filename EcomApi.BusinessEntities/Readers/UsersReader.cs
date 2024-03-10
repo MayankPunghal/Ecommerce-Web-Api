@@ -36,6 +36,7 @@ namespace EcomApi.BusinessEntities.Readers
         }
         public UserWithoutPassword MapUserToUserWithoutPassword(Users user)
         {
+            var LastLogin = Context.UserLoginAttempts.FirstOrDefault(a => a.UserID == user.UserID).AttemptDateTime;
             return new UserWithoutPassword
             {
                 UserId = user.UserID,
@@ -45,6 +46,7 @@ namespace EcomApi.BusinessEntities.Readers
                 LastName = user.LastName,
                 IsLocked = user.IsLocked,
                 RoleId = user.RoleId,
+                LastLogin = LastLogin,
                 RoleName = GetRoleNameByUserName(user.UserName)
             };
         }

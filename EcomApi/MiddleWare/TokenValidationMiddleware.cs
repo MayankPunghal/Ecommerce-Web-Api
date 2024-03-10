@@ -6,6 +6,7 @@ using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
+using System.Security.Cryptography;
 using System.Text;
 
 public class TokenValidationMiddleware
@@ -21,7 +22,7 @@ public class TokenValidationMiddleware
 
     public async Task Invoke(HttpContext context)
     {
-        var excludedPaths = new[] { "/api/1/users/loginbyusername", "/api/1/users/loginbyemail", "/api/1/general/checkhealth", "/api/1/general/generatetoken" };
+        var excludedPaths = new[] { "/api/1/users/loginbyusername", "/api/1/users/loginbyemail", "/api/1/general/checkhealth", "/api/1/general/generatetoken", "/api/1/users/registeruser" };
 
         // Check if the request path is in the excluded paths
         if (excludedPaths.Contains(context.Request.Path.Value))
@@ -43,24 +44,20 @@ public class TokenValidationMiddleware
 
         // Remove quotes from the token
         var token = authorizationHeader.ToString().Replace("Bearer ", "").Replace("\"", "");
-
-
-        var tokenHandler = new JwtSecurityTokenHandler();
         var key = Encoding.ASCII.GetBytes(AppSettings.Settings.Jwt.SecretKey);
 
         // Validate the token
         try
         {
-            var principal = tokenHandler.ValidateToken(token, new TokenValidationParameters
+            var principal = new JwtSecurityTokenHandler().ValidateToken(token, new TokenValidationParameters
             {
                 ValidateIssuerSigningKey = true,
                 IssuerSigningKey = new SymmetricSecurityKey(key),
                 ValidateIssuer = false,
                 ValidateAudience = true,
                 ClockSkew = TimeSpan.Zero,
-
-                ValidAudience = AppSettings.Settings.Jwt.Audience
-            }, out _);
+                ValidAudiences = AppSettings.Settings.Jwt.Audience
+        }, out _);
 
             var endpoint = context.GetEndpoint();
             if (endpoint != null)
@@ -95,21 +92,5 @@ public class TokenValidationMiddleware
         }
 
         await _next(context);
-    }
-
-    private bool UserHasRequiredRole(ClaimsPrincipal principal, string requestedPath)
-    {
-        // Customize this logic based on your application's role-checking mechanism
-        // For example, you might check the required role based on the requested endpoint
-        // or use a database query to check the user's roles.
-
-        // Sample logic: Check if the user has the "Administrator" role for certain endpoints
-        var requiredRolesForEndpoint = new Dictionary<string, string[]>
-        {
-            ["/api/1/products/setcategory"] = new[] { "Administrator" }
-        };
-
-        return requiredRolesForEndpoint.TryGetValue(requestedPath, out var requiredRoles) &&
-               requiredRoles.Any(role => principal.IsInRole(role));
     }
 }
